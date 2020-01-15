@@ -22,3 +22,16 @@ after_success:
   - docker push tldevoteam/multi-server
   - docker push tldevoteam/multi-worker
 
+#deploy:
+# add AWS variables
+#provider: elasticbeanstalk
+#regoin: us-west-1
+#app: multi-docker
+#env: MultiDocker-env
+#bucket_name: ..
+#bucket_path: ..
+#on:
+#  branch: master
+#access_key_id: $AWS_ACCESS_KEY
+#secret_accesskey:
+#  secure: $AWS_SECRET_KEY
