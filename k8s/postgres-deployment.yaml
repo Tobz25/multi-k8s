@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        component: postgres
+    spec:
+      # definition of volume config file to use to allocate the storage at deployment
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          # provide the storage from the volume to the containers
+          volumeMounts:
+              #name is the volume name specified above
+            - name: postgres-storage
+              # folder reference; anything stored at that folder is actually stored in the volume
+              mountPath: /var/lib/postgresql/data
+              # subPath is postgres-spezific
+              subPath: postgres
+          #overwrite the default password by creating an environment variable
+          env:
+            #if  container sees an env. var. with the name PGPASSWORD, it uses this as the default password
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pgpassword
+                  key: PGPASSWORD
+
+
