@@ -19,7 +19,7 @@ before_install:
   #build test version
   - docker build -t tldevoteam/multi-k8s-test -f ./client/Dockerfile.dev ./client
 
-scripts:
+script:
   - docker run -e CI=true tldevoteam/multi-k8s-test npm test
 
 deploy:
