@@ -23,7 +23,7 @@ script:
   - docker run -e CI=true tldevoteam/multi-k8s-test npm test
 
 deploy:
-  provider: scripts
+  provider: script
   script: bash ./deploy.sh
   on:
     branch: master
